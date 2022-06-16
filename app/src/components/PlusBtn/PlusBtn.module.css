@@ -1,0 +1,28 @@
+.button {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-color: #F8B2ED;
+  border: none;
+  /* background-image: url(../../images/plus.png);
+  background-repeat: no-repeat;
+  background-position: center center; */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+.button::before,
+.button::after {
+  content: '';
+  width: 20px;
+  height: 4px;
+  border-radius: 4px;
+  background-color: #a3008b;
+  position: absolute;
+}
+
+.button::after {
+  transform: rotate(90deg);
+}

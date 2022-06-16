@@ -1,0 +1,9 @@
+.loginBtn {
+  width: 18px;
+  height: 20px;
+  background-image: url(../../images/userIcon.png);
+  background-repeat: no-repeat;
+  background-size: contain;
+  border: none;
+  background-color: transparent;
+}

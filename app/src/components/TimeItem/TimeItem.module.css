@@ -1,0 +1,45 @@
+.wrapper {
+  display: flex;
+}
+
+.innerBox {
+  background-color: #F8B2ED;
+  border-radius: 5px;
+  padding: 10px 10px;
+  display: flex;
+  align-items: center;
+}
+
+.time {
+  font-size: 16px;
+  font-weight: 700;
+  width: 50px;
+  text-align: center;
+}
+
+.btn {
+  width: 20px;
+  margin-left: 15px;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.btn::before,
+.btn::after {
+  content: '';
+  width: 20px;
+  height: 3px;
+  border-radius: 3;
+  background-color: #A3008B;
+  position: absolute;
+}
+
+.btn::before {
+  transform: rotate(45deg);
+}
+
+.btn::after {
+  transform: rotate(-45deg);
+}

@@ -1,0 +1,15 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  text-decoration: none;
+}
+
+.App {
+  min-height: 100vh;
+  background-image: url(./images/bG.jpg);
+  background-repeat: no-repeat;
+  background-position: 0 0;
+  background-size: cover;
+  background-attachment: fixed;
+}
