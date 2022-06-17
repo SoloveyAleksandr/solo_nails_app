@@ -7,7 +7,7 @@ import PlusBtn from '../../components/PlusBtn/PlusBtn';
 import Popup from '../../components/Popup/Popup';
 import Spiner from '../../components/Spiner/Spiner';
 import TimeItem from '../../components/TimeItem/TimeItem';
-import { IWorkItem, setSelectedDay } from '../../store';
+import { setSelectedDay } from '../../store';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 
 import styles from './Day.module.css';
@@ -17,9 +17,12 @@ interface IDay { };
 const Day: FC<IDay> = () => {
   const reduxDispatch = useAppDispatch();
   const appState = useAppSelector(state => state.AppStore);
+
+  const [selectedTimeID, setSelectedTimeID] = useState('');
   const [spinerIsActive, setActiveSpiner] = useState(true);
   const [timePopupIsActive, setActiveTimePopup] = useState(false);
-  const [selectedTime, setSelectedTime] = useState('10:00')
+  const [selectedTime, setSelectedTime] = useState('10:00');
+  const [itemPopupIsActive, setItemPopupIsActive] = useState(false);
 
   const monthNames: string[] = ['января', 'февраля', 'мара', 'апреля', 'мая', 'июня', 'июля', 'августа', 'сентября', 'октября', 'ноября', 'декабря',];
 
@@ -44,8 +47,28 @@ const Day: FC<IDay> = () => {
     axios.post(`http://localhost:5000/days:${appState.selectedDay.fullDate}/add`, { time: selectedTime }, {
       headers: { "Content-Type": "application/json" }
     })
+      .then(() => getTime())
       .catch(e => console.log(e))
-      .finally(() => getTime())
+  }
+
+  function deleteTime(id: string): void {
+    const time = appState.selectedDay.workList.find(el => el.id === id);
+    const confirmRequest = window.confirm(`Удалить время на ${time?.time}`);
+    if (confirmRequest) {
+      setItemPopupIsActive(false);
+      axios.delete(`http://localhost:5000/days:${appState.selectedDay.fullDate}/delete`, {
+        data: {
+          id,
+        }
+      })
+        .then(() => getTime())
+        .catch(e => console.log(e))
+    }
+    return;
+  }
+
+  function reservedTime() {
+    console.log('reserved');
   }
 
   function closeTimePopup() {
@@ -63,7 +86,7 @@ const Day: FC<IDay> = () => {
         </Header>
 
         {
-          timePopupIsActive && appState.isAdmin ?
+          timePopupIsActive ?
             <Popup
               closeFunc={closeTimePopup}>
               <div className={styles.timePopup}>
@@ -76,8 +99,33 @@ const Day: FC<IDay> = () => {
                   добавить
                 </button>
               </div>
-            </Popup> :
-            <div></div>
+            </Popup>
+            :
+            <></>
+        }
+
+        {
+          itemPopupIsActive ?
+            <Popup
+              closeFunc={() => setItemPopupIsActive(false)}>
+              <div className={styles.itemPopup}>
+                {appState.isAdmin ?
+                  <button
+                    className={styles.timePopupBtn}
+                    onClick={() => deleteTime(selectedTimeID)}>
+                    удалить
+                  </button>
+                  :
+                  <button
+                    className={styles.timePopupBtn}
+                    onClick={() => reservedTime()}>
+                    записаться
+                  </button>
+                }
+              </div>
+            </Popup>
+            :
+            <></>
         }
 
         <Container>
@@ -91,58 +139,23 @@ const Day: FC<IDay> = () => {
 
           <ul className={styles.list}>
             {
-              appState.selectedDay.workList.map(item =>
-                <TimeItem
-                  key={item.id}
-                  time={item.time}
-                  removeFunc={() => console.log(`remove time: ${item.time}`)}
-                  openFunc={() => console.log(`open time with ID: ${item.id}`)} />
-              )
+              appState.selectedDay.workList.length > 0 ?
+                appState.selectedDay.workList.map(item =>
+                  <li
+                    key={item.id}
+                    className={styles.listItem}>
+                    <TimeItem
+                      timeItem={item}
+                      adminBtnClick={() => console.log('admin click')}
+                      userBtnClick={() => console.log('user click')} />
+                  </li>
+                ) :
+                <span className={styles.comment}>Записи нет :(</span>
             }
           </ul>
         </Container>
       </div>
   );
 }
-
-interface IWorkTime {
-  date: string,
-  openTime: string,
-  isFree?: boolean,
-}
-
-class WorkTime {
-  date: string;
-  openTime: string;
-  isFree?: boolean;
-  client?: {
-    name: string,
-    phone: string,
-    comment: string,
-  }
-  constructor({
-    date,
-    openTime,
-    isFree = true,
-  }: IWorkTime) {
-    this.date = date;
-    this.openTime = openTime;
-    this.isFree = isFree;
-  }
-}
-
-// function WorkTime(
-//   date: string,
-//   time: string,
-//   client?: string,
-//   phone?: string,
-//   comment?: string,
-// ) {
-//   this.date = date;
-//   this.time = time;
-//   this.client = client;
-//   this.phone = phone;
-//   this.comment = comment;
-// }
 
 export default Day;

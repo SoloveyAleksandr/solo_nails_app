@@ -21,3 +21,18 @@
   font-size: 18px;
   font-weight: 700;
 }
+
+.list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+}
+
+.list li+li {
+  margin-top: 15px;
+}
+
+.comment {
+  font-size: 22px;
+  font-weight: 600;
+}

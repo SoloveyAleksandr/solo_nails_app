@@ -1,45 +1,40 @@
 .wrapper {
-  display: flex;
+  background-color: rgba(185, 152, 186, 0.5);
+  border-radius: 10px;
 }
 
-.innerBox {
+.header {
   background-color: #F8B2ED;
-  border-radius: 5px;
-  padding: 10px 10px;
+  border-radius: 10px;
+  color: #fff;
+  padding: 5px;
   display: flex;
   align-items: center;
+  justify-content: space-between;
+  font-size: 20px;
+  font-weight: 600;
 }
 
-.time {
-  font-size: 16px;
-  font-weight: 700;
-  width: 50px;
-  text-align: center;
+._red {
+  color: rgb(217, 0, 60);
+}
+
+.box {
+  padding: 10px;
+}
+
+.list {
+  list-style: none;
+  margin-bottom: 15px;
 }
 
 .btn {
-  width: 20px;
-  margin-left: 15px;
-  position: relative;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.btn::before,
-.btn::after {
-  content: '';
-  width: 20px;
-  height: 3px;
-  border-radius: 3;
-  background-color: #A3008B;
-  position: absolute;
-}
-
-.btn::before {
-  transform: rotate(45deg);
-}
-
-.btn::after {
-  transform: rotate(-45deg);
+  padding: 5px 10px;
+  border-radius: 5px;
+  border: 3px solid #F8B2ED;
+  color: #fff;
+  font-size: 18px;
+  font-weight: 700;
+  background-color: transparent;
+  box-shadow: 0 0 6px 0px #fff;
 }
