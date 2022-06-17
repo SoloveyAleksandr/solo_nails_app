@@ -31,7 +31,6 @@
     "eject": "react-scripts eject",
     "server": "npm run dev --prefix ../server/",
     "serverinstall": "npm install --prefix ../server/",
-    "appinstall": "concurrently \"npm run serverinstall\" \"npm install\"",
     "app": "concurrently \"npm run server\" \"npm start\""
   },
   "eslintConfig": {

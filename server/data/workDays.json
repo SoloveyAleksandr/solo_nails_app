@@ -1,1 +1,94 @@
-{}
+{
+  "01.06.2022": {
+    "fullDate": "01.06.2022",
+    "day": "01",
+    "month": "06",
+    "workList": [
+      {
+        "id": "4ef217da-5",
+        "time": "10:00",
+        "reserved": false,
+        "client": {}
+      }
+    ]
+  },
+  "02.06.2022": {
+    "fullDate": "02.06.2022",
+    "day": "02",
+    "month": "06",
+    "workList": []
+  },
+  "18.06.2022": {
+    "fullDate": "18.06.2022",
+    "day": "18",
+    "month": "06",
+    "workList": []
+  },
+  "05.06.2022": {
+    "fullDate": "05.06.2022",
+    "day": "05",
+    "month": "06",
+    "workList": []
+  },
+  "03.06.2022": {
+    "fullDate": "03.06.2022",
+    "day": "03",
+    "month": "06",
+    "workList": []
+  },
+  "12.06.2022": {
+    "fullDate": "12.06.2022",
+    "day": "12",
+    "month": "06",
+    "workList": []
+  },
+  "10.01.2022": {
+    "fullDate": "10.01.2022",
+    "day": "10",
+    "month": "01",
+    "workList": []
+  },
+  "10.06.2022": {
+    "fullDate": "10.06.2022",
+    "day": "10",
+    "month": "06",
+    "workList": []
+  },
+  "13.06.2022": {
+    "fullDate": "13.06.2022",
+    "day": "13",
+    "month": "06",
+    "workList": []
+  },
+  "08.06.2022": {
+    "fullDate": "08.06.2022",
+    "day": "08",
+    "month": "06",
+    "workList": []
+  },
+  "11.12.2022": {
+    "fullDate": "11.12.2022",
+    "day": "11",
+    "month": "12",
+    "workList": []
+  },
+  "Invalid date": {
+    "fullDate": "Invalid date",
+    "day": "In",
+    "month": "al",
+    "workList": []
+  },
+  "17.06.2022": {
+    "fullDate": "17.06.2022",
+    "day": "17",
+    "month": "06",
+    "workList": [
+      {
+        "id": "f8df7fae-8",
+        "time": "10:00",
+        "reserved": false,
+        "client": {}
+      }
+    ]
+  }
+}

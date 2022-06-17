@@ -5,6 +5,7 @@ const validator = require('../services/validator');
 const router = app => {
   app.get('/:month/:year', DayController.getNumberOfDays);
   app.get('/days:date', DayController.getDay);
+  app.post('/days:date/add', DayController.addTime);
   // app.post('/registration', [validator.checkEmail, validator.checkPassword], UsersController.registration)
 };
 
