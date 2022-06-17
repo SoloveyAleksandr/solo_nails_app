@@ -55,7 +55,7 @@ const Calendar: FC<ICalendar> = () => {
         <Header>
           {
             appState.isAdmin ?
-              <div></div> :
+              <div onClick={() => reduxDispatch(setIsAdmin(false))}>log out</div> :
               <LoginBtn
                 handleClick={() => reduxDispatch(setIsAdmin(true))} />
           }

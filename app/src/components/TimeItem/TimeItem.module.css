@@ -3,6 +3,11 @@
   border-radius: 10px;
 }
 
+.disabled {
+  filter: blur(1px) opacity(60%);
+  pointer-events: none;
+}
+
 .header {
   background-color: #F8B2ED;
   border-radius: 10px;

@@ -18,7 +18,7 @@ const TimeItem: FC<ITimeItem> = ({
   const appState = useAppSelector(state => state.AppStore);
 
   return (
-    <div className={styles.wrapper}>
+    <div className={timeItem.reserved && !appState.isAdmin ? `${styles.wrapper} ${styles.disabled}` : styles.wrapper}>
       <div className={timeItem.reserved ?
         `${styles.header} ${styles._red}` : styles.header}>
         <span className={styles.time}>{timeItem.time}</span>
