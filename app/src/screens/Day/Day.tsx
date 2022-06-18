@@ -1,10 +1,11 @@
 import axios from 'axios';
-import { FC, useEffect, useState } from 'react';
+import { FC, FormEvent, useEffect, useState } from 'react';
 import BackBtn from '../../components/BackBtn/BackBtn';
 import Container from '../../components/Container/Container';
 import Header from '../../components/Header/Header';
 import PlusBtn from '../../components/PlusBtn/PlusBtn';
 import Popup from '../../components/Popup/Popup';
+import ReserveForm from '../../components/ReserveForm/ReserveForm';
 import Spiner from '../../components/Spiner/Spiner';
 import TimeItem from '../../components/TimeItem/TimeItem';
 import { setSelectedDay } from '../../store';
@@ -18,11 +19,14 @@ const Day: FC<IDay> = () => {
   const reduxDispatch = useAppDispatch();
   const appState = useAppSelector(state => state.AppStore);
 
-  const [selectedTimeID, setSelectedTimeID] = useState('');
   const [spinerIsActive, setActiveSpiner] = useState(true);
   const [timePopupIsActive, setActiveTimePopup] = useState(false);
   const [selectedTime, setSelectedTime] = useState('10:00');
-  const [itemPopupIsActive, setItemPopupIsActive] = useState(false);
+  const [formPopupIsActive, setActiveFormPopup] = useState(false);
+  const [timeItemID, setTimeItemID] = useState('');
+  const [formName, setFormName] = useState('');
+  const [formPhone, setFormPhone] = useState('');
+  const [formComment, setFormComment] = useState('');
 
   const monthNames: string[] = ['января', 'февраля', 'мара', 'апреля', 'мая', 'июня', 'июля', 'августа', 'сентября', 'октября', 'ноября', 'декабря',];
 
@@ -55,7 +59,6 @@ const Day: FC<IDay> = () => {
     const time = appState.selectedDay.workList.find(el => el.id === id);
     const confirmRequest = window.confirm(`Удалить время на ${time?.time}`);
     if (confirmRequest) {
-      setItemPopupIsActive(false);
       axios.delete(`http://localhost:5000/days:${appState.selectedDay.fullDate}/delete`, {
         data: {
           id,
@@ -67,13 +70,31 @@ const Day: FC<IDay> = () => {
     return;
   }
 
-  function reservedTime() {
-    console.log('reserved');
+  function reserveTime(e: FormEvent) {
+    e.preventDefault();
+    axios.post(`http://localhost:5000/days:${appState.selectedDay.fullDate}/reserve`, {
+      timeID: timeItemID,
+      name: formName,
+      phone: formPhone,
+      comment: formComment,
+    })
+      .then(() => closeFormPopup())
+      .catch(e => console.log(e))
+      .finally(() => {
+        getTime();
+      })
   }
 
   function closeTimePopup() {
     setActiveTimePopup(false);
     setSelectedTime('10:00');
+  }
+
+  function closeFormPopup() {
+    setFormName('');
+    setFormPhone('');
+    setFormComment('');
+    setActiveFormPopup(false);
   }
 
   return (
@@ -105,25 +126,22 @@ const Day: FC<IDay> = () => {
         }
 
         {
-          itemPopupIsActive ?
-            <Popup
-              closeFunc={() => setItemPopupIsActive(false)}>
-              <div className={styles.itemPopup}>
-                {appState.isAdmin ?
-                  <button
-                    className={styles.timePopupBtn}
-                    onClick={() => deleteTime(selectedTimeID)}>
-                    удалить
-                  </button>
-                  :
-                  <button
-                    className={styles.timePopupBtn}
-                    onClick={() => reservedTime()}>
-                    записаться
-                  </button>
-                }
-              </div>
-            </Popup>
+          formPopupIsActive ?
+            <div className={styles.formWrapper}>
+              <Popup
+                closeFunc={closeFormPopup}>
+                <div className={styles.formPopup}>
+                  <ReserveForm
+                    name={formName}
+                    phone={formPhone}
+                    comment={formComment}
+                    changeName={value => setFormName(value)}
+                    changePhone={value => setFormPhone(value)}
+                    changeComment={value => setFormComment(value)}
+                    onSubmit={e => reserveTime(e)} />
+                </div>
+              </Popup>
+            </div>
             :
             <></>
         }
@@ -146,8 +164,11 @@ const Day: FC<IDay> = () => {
                     className={styles.listItem}>
                     <TimeItem
                       timeItem={item}
-                      adminBtnClick={() => console.log('admin click')}
-                      userBtnClick={() => console.log('user click')} />
+                      adminBtnClick={() => deleteTime(item.id)}
+                      userBtnClick={() => {
+                        setTimeItemID(item.id);
+                        setActiveFormPopup(true);
+                      }} />
                   </li>
                 ) :
                 <span className={styles.comment}>Записи нет :(</span>

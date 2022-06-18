@@ -9,6 +9,7 @@ const router = app => {
   app.post('/days:date/add', TimeController.addTime);
   app.delete('/days:date/delete', TimeController.deleteTime);
   app.get('/days:date/get', TimeController.getTime);
+  app.post('/days:date/reserve', TimeController.reserveTime);
   // app.post('/registration', [validator.checkEmail, validator.checkPassword], UsersController.registration)
 };
 

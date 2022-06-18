@@ -21,6 +21,7 @@
 
 .popup {
   min-width: 300px;
+  max-width: calc(100% - 30px);
   background-color: #fff;
   box-shadow: 0 0 8px 3px rgba(255, 255, 255, 0.5);
   position: relative;

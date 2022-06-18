@@ -36,3 +36,7 @@
   font-size: 22px;
   font-weight: 600;
 }
+
+.formWrapper {
+  padding: 0 15px;
+}
